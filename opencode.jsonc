@@ -1,0 +1,24 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "update": "disable",
+  "permissions": [
+    // Git: commit, verifiche e revert li gestisce lo script
+    { "action": "shell", "resource": "git commit *", "effect": "deny" },
+    { "action": "shell", "resource": "git push *", "effect": "deny" },
+    { "action": "shell", "resource": "git reset *", "effect": "deny" },
+    { "action": "shell", "resource": "git clean *", "effect": "deny" },
+    { "action": "shell", "resource": "git rebase *", "effect": "deny" },
+    { "action": "shell", "resource": "sudo *", "effect": "deny" },
+
+    // Segreti e storia git
+    { "action": "read", "resource": "*.env", "effect": "deny" },
+    { "action": "read", "resource": "*.env.*", "effect": "deny" },
+    { "action": "read", "resource": "*.env.example", "effect": "allow" },
+    { "action": "edit", "resource": "*.env", "effect": "deny" },
+    { "action": "edit", "resource": ".git/*", "effect": "deny" },
+
+    // Messaggio di commit proposto dall'agente (in /logs, fuori dal repo)
+    { "action": "edit", "resource": "*COMMIT_MSG.txt", "effect": "allow" },
+    { "action": "edit", "resource": "/tmp/*", "effect": "allow" }
+  ]
+}
